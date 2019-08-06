@@ -1,0 +1,12 @@
+{
+    "name": "cg.ncn.todolist",
+    "version": "0.1.1",
+    "dependencies": {
+        "ejs": "~2.1.4",
+        "express": "^4.17.1",
+        "serve-favicon": "^2.5.0",
+        "socket.io": "^2.2.0"
+    },
+    "author": "Clerc17 <nkounkounicephore@gmail.com>",
+    "description": "Un gestionnaire de todolist ultra basique"
+}

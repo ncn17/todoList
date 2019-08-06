@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>TodoList Clerc</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/style.css'>
+</head>
+<body>
+    <div id="bloc_page">
+        <h1>Clerc TodoList version 0.1.0</h1>
+        <form action="/todo/addTask" method="POST" id="form">
+            <label for="todo">Entrez une tâche : </label>
+            <input type="text" id="todo" name="newTask" autofocus> 
+            <input type="submit" name="ajouter">
+        </form>
+        <ul id="task_zone"></ul>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let task_zone = document.getElementById('task_zone');
+        let todo = document.getElementById('todo');
+        let form = document.getElementById('form');
+
+        function cleanTask () {
+            let tab_li = document.querySelectorAll('#task_zone li');
+            tab_li.forEach((item) => task_zone.removeChild(item));
+        }
+
+        function updateTask(taskTab){
+            cleanTask();
+            taskTab.forEach(function(task,index){
+                let node = document.createElement('li');
+                node.innerHTML = `<a title="supprimer cette tâche" onclick="deleteElement(${index})" ><img alt="delete" src="/img/delete.png" /></a>
+                                    <span class="task">${task}</span>`;
+                task_zone.appendChild(node);
+            });
+        }
+
+        //client connection
+        var socket = io.connect('http://localhost:8080');
+        socket.on('welcome',function(taskTab){
+            //add all task
+            updateTask(taskTab);
+        })
+
+        //add new Task
+        form.addEventListener('submit',(e) => {
+            e.preventDefault();
+            todo.value.trim();
+            if(todo.value !== '' ){
+                socket.emit('addNewTask',todo.value);
+            }else{ 
+                alert("Erreur : votre tâche est vide")
+            }
+            todo.value = '';
+        })
+
+        //delete task
+        function deleteElement(id){
+            socket.emit('deleteTask',id);
+        }
+
+        //update all task
+        socket.on('refreshData',function(taskTab){
+            updateTask(taskTab);
+        })
+    </script>
+</body>
+</html>

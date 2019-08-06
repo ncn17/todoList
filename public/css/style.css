@@ -1,0 +1,37 @@
+
+#bloc_page{
+    width: 500px;
+    margin: auto;
+    height: 500x;
+    border: 1px solid blue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+h1{
+    font-weight: 100;
+    font-size: 1.8em;
+    text-align: center;
+}
+h3{
+    color: blue;
+    font-weight: 100;
+    font-size: 1.1em;
+    text-align: center;
+}
+.task{
+    font-family: Helvetica, sans-serif;
+    font-size: 1.3em;
+}
+input {
+    margin-top: 10px;
+}
+
+#task_zone li {
+    list-style-type: none;
+}
+
+#formTask{ text-align: center;}
+
+a:hover {
+    cursor: pointer;
+}
